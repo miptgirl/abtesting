@@ -28,9 +28,21 @@ The following metrics will be used as evaluation metrics:
 I am expecting in experiment group to have lower __gross conversion__ (some students will decide to have a free access to material instead of free trial because they won't be committed enough) and higher __retention__ and __net conversion__ (students have correct expectations on course commitment and it's more likely that they will finish the course).
 
 ###Measuring Standard Deviation
-List the standard deviation of each of your evaluation metrics. (These should be the answers from the "Calculating standard deviation" quiz.)
+Let's estimate standard deviation for evaluation metrics given the sample size 5000 unique cookies visiting HomePage per day.
+I will be using the following baseline values:
+  * _Number of cookies (unique cookies to view page per day)_ = 5000
+  * _Click-through-probability on "Start free trial"_ = 0.08
+  * _Probability of enrolling, given click_ = 0.20625
+  * _Probability of payment, given enroll_ = 0.53
+  * _Probability of payment, given click_ = _Probability of enrolling, given click_ * _Probability of payment, given enroll_ = 0.1093125
+  * _Unique cookies who click "Start free trial" per day_ = _# cookies_ * _Click-through-probability on "Start free trial"_ = 400
+  * _Unique cookies who enroll_ = _Unique cookies who click "Start free trial" per day_ * _Probability of enrolling, given click_ = 82.5
 
-For each of your evaluation metrics, indicate whether you think the analytic estimate would be comparable to the the empirical variability, or whether you expect them to be different (in which case it might be worth doing an empirical estimate if there is time). Briefly give your reasoning in each case.
+All evaluation metrics (__gross conversion__, __retention__, __net conversion__) are probability metrics so they follow binomial distribution and SE (standard error) = sqrt(p*(1-p)/N).
+
+  * __Gross conversion__: p is probability of enrolling, given click, N is unique cookies who click "Start free trial", SE = sqrt(0.20625*(1-0.20625)/400) = 0.0202
+  * __Retention__: p is probability of payment, given enroll, N is unique cookies who enroll, SE = sqrt(0.53*(1-0.53)/82.5) = 0.0549
+  * __Net conversion__: p is probability of payment, given click, N is unique cookies who click "Start free trial", SE = sqrt(0.1093125*(1-0.1093125)/400) = 0.0156
 
 ###Sizing
 ####Number of Samples vs. Power
