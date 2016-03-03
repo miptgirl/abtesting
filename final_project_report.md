@@ -61,10 +61,24 @@ It will be too long for experiment, so we should revise our decision about evalu
 I've decided to divert 100% of users to experiment, since it's not considered to be very risky and it allows us to have quicker results.
 
 ##Experiment Analysis
-###Sanity Checks
-For each of your invariant metrics, give the 95% confidence interval for the value you expect to observe, the actual observed value, and whether the metric passes your sanity check. (These should be the answers from the "Sanity Checks" quiz.)
+Experiment results are stored [here](https://docs.google.com/spreadsheets/d/1j62fHO68B7rxpgoVYsr0Iqy2CJuCM7LuTQ9QBxcQKlc/edit#gid=154400404). Let's consider only data from October, 11 to November, 2.
 
-For any sanity check that did not pass, explain your best guess as to what went wrong based on the day-by-day data. Do not proceed to the rest of the analysis unless all sanity checks pass.
+###Sanity Checks
+
+First of all we need to perform sanity checks to be sure, that there is no problems in experiment set up.
+Let's determine confidence interval for each invariant metric and observed value:
+For number of cookies and cliks we have a binomial distribution with probability = 50% (probability of assigning user to control group) and SE = sqrt(p(1-p)/N) = sqrt(1/N)/2
+  * __Number of cookies__: # cookies in control = 345543, # cookies in experiment = 344660, total = 690203, SE = sqrt(1/690203)/2 = 0.0006, m (margin of error) = Z*SE = 1.96*0.0006 = 0.0012, then confidence interval equals to (0.4988, 0.5012), observed value = 345543/690203 = 0.5006 is within confidence interval, so check is passed.
+  * __Number of clicks__: # cookies in control = 28378, # cookies in experiment = 28325, total = 56703, SE = sqrt(1/56703)/2 = 0.0021, m (margin of error) = Z*SE = 1.96*0.0021 = 0.0041, then confidence interval equals to (0.4959, 0.5041), observed value = 28378/56703 = 0.5005 is within confidence interval, so check is passed.
+
+One more check we have is on __CTP for "Start free trial button"__:
+N_cont = 345543, X_cont = 28378
+N_exp = 344660, X_exp = 28325
+p_pool = (X_cont + X_exp)/(N_cont + N_exp) = 0.0822
+SE_pool = sqrt(p_pool(1-p_poll)(1/N_exp + 1/N_cont)) = 0.0007
+d = p_exp - p_cont = 0.00006
+m = Z*SE_pool = 1.96*0.0007 = 0.0013
+d < m -> there's no difference in CTP values in control and experiment, sanity check passed.
 
 ###Result Analysis
 ####Effect Size Tests
