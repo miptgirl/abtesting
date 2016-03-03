@@ -22,7 +22,7 @@ The following metrics will be used as invariant metrics for sanity check, they s
 
 The following metrics will be used as evaluation metrics:
   *  __Gross conversion__: number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. (`dmin= 0.01`)
-  *  __Retention__: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by number of user-ids to complete checkout. (`dmin=0.01`)
+  *  __Retention__: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by number of user-ids to complete checkout. (`dmin=0.01`) !!this metric won't be used since it needs to much traffic to be significant!!
   *  __Net conversion__: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. (`dmin= 0.0075`)
 
 I am expecting in experiment group to have lower __gross conversion__ (some students will decide to have a free access to material instead of free trial because they won't be committed enough) and higher __retention__ and __net conversion__ (students have correct expectations on course commitment and it's more likely that they will finish the course).
@@ -46,12 +46,19 @@ All evaluation metrics (__gross conversion__, __retention__, __net conversion__)
 
 ###Sizing
 ####Number of Samples vs. Power
-Indicate whether you will use the Bonferroni correction during your analysis phase, and give the number of pageviews you will need to power you experiment appropriately. (These should be the answers from the "Calculating Number of Pageviews" quiz.)
+Since we are using multiple metrics let's use Benferroni correction: alpha_common = alpha/3 = 0.05/3.
+Let's calculate the needed  sample sizes in users using [online calculator](http://www.evanmiller.org/ab-testing/sample-size.html) for each individual metric (since online calculator allows to insert only round alpha values let's the closest one: alpha = 2%).
+  * __Gross conversion__: 33014 unique cookies that clicked the "Start free trial" button for each group, _total number of unique cookies on the home page for 2 groups_ = 2 * 33014 / _Click-through-probability on "Start free trial"_ = 2*33014/0.08 = 825 350
+  * __Retention__: 50013 enrolled user-ids for each group, _total number of unique cookies on the home page for 2 groups_ = 2 * 50013 / _Probability of enrolling, given click_ / _Click-through-probability on "Start free trial"_ = 2*50013/0.20625/0.08 = 6 062 182
+  * __Net conversion__: 19747 unique cookies that clicked the "Start free trial" button for each group, _total number of unique cookies on the home page for 2 groups_ = 2 * 19747 / _Click-through-probability on "Start free trial"_ = 2*19747/0.08 = 493 675
 
 ####Duration vs. Exposure
-Indicate what fraction of traffic you would divert to this experiment and, given this, how many days you would need to run the experiment. (These should be the answers from the "Choosing Duration and Exposure" quiz.)
 
-Give your reasoning for the fraction you chose to divert. How risky do you think this experiment would be for Udacity?
+We need to have enough power for all evaluation metrics, so we need to have 6062182 unique cookies on HomePage (the maximum value from previous task). Let's assume that we divert to experiment 100% of traffic (40 000 unique cookies a day), so we need 6062182/40000 = 152 days = 5 months. 
+
+It will be too long for experiment, so we should revise our decision about evaluation metrics and consider only ____gross conversion__ and __net conversion__ then we will need conduct experiment 825350/40000 = 21 days (this looks much more plausible estimation).
+
+I've decided to divert 100% of users to experiment, since it's not considered to be very risky and it allows us to have quicker results.
 
 ##Experiment Analysis
 ###Sanity Checks
