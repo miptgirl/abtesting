@@ -13,11 +13,19 @@ The hypothesis was that this might set clearer expectations for students upfront
 
 The unit of diversion is a cookie, although if the student enrolls in the free trial, they are tracked by user-id from that point forward. The same user-id cannot enroll in the free trial twice. For users that do not enroll, their user-id is not tracked in the experiment, even if they were signed in when they visited the course overview page.
 
-##Experiment Design
-###Metric Choice
-List which metrics you will use as invariant metrics and evaluation metrics here. (These should be the same metrics you chose in the "Choosing Invariant Metrics" and "Choosing Evaluation Metrics" quizzes.)
+## Experiment Design
+### Metric Choice
+The following metrics will be used as invariant metrics for sanity check, they shouldn't be affected by experiment (to be sure that experiment is set up well and there is not pre-exisiting differences between control and experiment groups):
+  * __Number of cookies__: number of unique cookies to view the course overview page. (`dmin=3000`)
+  * __Number of clicks__: number of unique cookies to click the "Start free trial" button (which happens before the free trial screener is trigger). (`dmin=240`)
+  *  __Click-through-probability__: number of unique cookies to click the "Start free trial" button divided by number of unique cookies to view the course overview page. (`dmin=0.01`)
 
-For each metric, explain both why you did or did not use it as an invariant metric and why you did or did not use it as an evaluation metric. Also, state what results you will look for in your evaluation metrics in order to launch the experiment.
+The following metrics will be used as evaluation metrics:
+  *  __Gross conversion__: number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. (`dmin= 0.01`)
+  *  __Retention__: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by number of user-ids to complete checkout. (`dmin=0.01`)
+  *  __Net conversion__: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. (`dmin= 0.0075`)
+
+I am expecting in experiment group to have lower __gross conversion__ (some students will decide to have a free access to material instead of free trial because they won't be committed enough) and higher __retention__ and __net conversion__ (students have correct expectations on course commitment and it's more likely that they will finish the course).
 
 ###Measuring Standard Deviation
 List the standard deviation of each of your evaluation metrics. (These should be the answers from the "Calculating standard deviation" quiz.)
