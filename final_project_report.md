@@ -1,4 +1,4 @@
-# Experimet: Udacity Free Trial Screener
+# Experiment: Udacity Free Trial Screener
 ##Experiment Overview
 
 At the time of this experiment, Udacity courses currently have two options on the home page: "start free trial", and "access course materials". If the student clicks "start free trial", they will be asked to enter their credit card information, and then they will be enrolled in a free trial for the paid version of the course. After 14 days, they will automatically be charged unless they cancel first. If the student clicks "access course materials", they will be able to view the videos and take the quizzes for free, but they will not receive coaching support or a verified certificate, and they will not submit their final project for feedback.
@@ -73,11 +73,17 @@ For number of cookies and cliks we have a binomial distribution with probability
 
 One more check we have is on __CTP for "Start free trial button"__:
 N_cont = 345543, X_cont = 28378
+
 N_exp = 344660, X_exp = 28325
+
 p_pool = (X_cont + X_exp)/(N_cont + N_exp) = 0.0822
+
 SE_pool = sqrt(p_pool(1-p_poll)(1/N_exp + 1/N_cont)) = 0.0007
+
 d = p_exp - p_cont = 0.00006
+
 m = Z*SE_pool = 1.96*0.0007 = 0.0013
+
 d < m -> there's no difference in CTP values in control and experiment, sanity check passed.
 
 ###Result Analysis
