@@ -88,10 +88,16 @@ d < m -> there's no difference in CTP values in control and experiment, sanity c
 
 ###Result Analysis
 ####Effect Size Tests
-For each of your evaluation metrics, give a 95% confidence interval around the difference between the experiment and control groups. Indicate whether each metric is statistically and practically significant. (These should be the answers from the "Effect Size Tests" quiz.)
+For each of evaluation metrics, let's compute a 95% confidence interval around the difference between the experiment and control groups. In calculations we will assume that SE depends on sqrt(1/N1 + 1/N2) and will take estimations from "Measuring Standard Deviation" to get SE in experiment.
+
+* __Gross conversion__ = # enrolled users/ # users who clicked. clicks_exp = 17260, clicks_control = 17293, enrollments_exp = 3423, enrollments_control = 3785. r_exp = enrollments_exp/clicks_exp = 0.1983, r_control = enrollments_control/clicks_control = 0.2189, d = r_exp - r_control = -0.0206. SE = sqrt(r_exp*(1-r_exp)/clicks_exp + r_control*(1-r_control)/clicks_control) = 0.0044, m = 1.96*SE = 0.0086, confidence interval is (-0.0291, -0.012). Result is statistically significant (0 isn't in confidence interval), but is negative.
+* __Net conversion__ = # payed users/ # users who clicked. clicks_exp = 17260, clicks_control = 17293, payments_exp = 1945, payments_control = 2033. r_exp = payments_exp/clicks_exp = 0.1127, r_control = payments_control/clicks_control = 0.1645, d = r_exp - r_control = -0.0049. SE = sqrt(r_exp*(1-r_exp)/clicks_exp + r_control*(1-r_control)/clicks_control) = 0.0034, m = 1.96*SE = 0.0067, confidence interval is (-0.0116, 0.0019). Result isn't statistically significant (0 is in confidence interval).
+
 
 ####Sign Tests
-For each of your evaluation metrics, do a sign test using the day-by-day data, and report the p-value of the sign test and whether the result is statistically significant. (These should be the answers from the "Sign Tests" quiz.)
+For each of your evaluation metrics, let's do a sign test using the day-by-day data, and determine the p-value of the sign test and whether the result is statistically significant. Success - metric malue in experiment is greater than in control.  
+  * __Gross conversion__: 19 successes, 23 values, p_value = 0.0026 < alpha = 0.05 (statistically significant)
+  * __Net conversion__: 10 successes, 23 values, p_value = 0.6776 > alpha = 0.05 (not statistically significant)
 
 ####Summary
 State whether you used the Bonferroni correction, and explain why or why not. If there are any discrepancies between the effect size hypothesis tests and the sign tests, describe the discrepancy and why you think it arose.
